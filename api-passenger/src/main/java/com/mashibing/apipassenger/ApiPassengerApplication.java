@@ -2,6 +2,7 @@ package com.mashibing.apipassenger;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @description
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 16:33 2024/12/16
  **/
 @SpringBootApplication
+@EnableDiscoveryClient
 public class ApiPassengerApplication {
 
     public static void main(String[] args) {
