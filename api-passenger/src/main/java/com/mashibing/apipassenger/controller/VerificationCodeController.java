@@ -18,6 +18,12 @@ public class VerificationCodeController {
     @Autowired
     private VerificationCodeService verificationCodeService;
 
+    /**
+     *
+     *
+     * @param verificationCodeDTO
+     * @return
+     */
     @PostMapping("/verification-code")
     public String verificationCode(@RequestBody VerificationCodeDTO verificationCodeDTO){
         String passengerPhone = verificationCodeDTO.getPassengerPhone();
