@@ -34,4 +34,7 @@ public class VerificationCodeService {
         return ResponseResult.success("");
     }
 
+    public ResponseResult checkCode(String passengerPhone, String verificationCode) {
+        return null;
+    }
 }
