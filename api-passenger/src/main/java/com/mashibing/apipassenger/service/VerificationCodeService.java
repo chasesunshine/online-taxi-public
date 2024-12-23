@@ -1,10 +1,16 @@
 package com.mashibing.apipassenger.service;
 
 import com.mashibing.apipassenger.remote.ServiceVefificationcodeClient;
+import com.mashibing.internalcommon.constant.CommonStatusEnum;
 import com.mashibing.internalcommon.constant.IdentityConstants;
+import com.mashibing.internalcommon.constant.TokenConstants;
 import com.mashibing.internalcommon.dto.ResponseResult;
+import com.mashibing.internalcommon.request.VerificationCodeDTO;
 import com.mashibing.internalcommon.responese.NumberCodeResponse;
+import com.mashibing.internalcommon.responese.TokenResponse;
+import com.mashibing.internalcommon.util.JwtUtils;
 import com.mashibing.internalcommon.util.RedisPrefixUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -35,6 +41,20 @@ public class VerificationCodeService {
     }
 
     public ResponseResult checkCode(String passengerPhone, String verificationCode) {
-        return null;
+        // 根据手机号，去redis读取验证码
+//        String key = RedisPrefixUtils.generatorKeyByPhone(passengerPhone,IdentityConstants.PASSENGER_IDENTITY) ;
+//        String codeRedis = stringRedisTemplate.opsForValue().get(key);
+//        System.out.println("redis中的value："+codeRedis);
+
+        // 校验验证码
+
+
+        // 判断原来是否有用户，并进行对应的处理
+
+
+        // 颁发令牌，不应该用魔法值，用常量
+        TokenResponse tokenResponse = new TokenResponse();
+        tokenResponse.setAccessToken("token value");
+        return ResponseResult.success(tokenResponse);
     }
 }
