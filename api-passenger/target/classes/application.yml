@@ -1,12 +1,13 @@
 server:
-  port: 8082
+  port: 8081
 spring:
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-
-# 验证码服务
   application:
-    name: service-verificationcode
-
+    name: api-passenger
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
