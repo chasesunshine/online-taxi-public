@@ -1,12 +1,15 @@
-package com.mashibing.servicepassengeruser.apipassenger.remote;
+package com.mashibing.apipassenger.remote;
 
-import com.mashibing.servicepassengeruser.internalcommon.dto.ResponseResult;
-import com.mashibing.servicepassengeruser.internalcommon.responese.NumberCodeResponse;
+import com.mashibing.internalcommon.dto.ResponseResult;
+import com.mashibing.internalcommon.responese.NumberCodeResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ *
+ */
 @FeignClient("service-verificationcode")
 public interface ServiceVefificationcodeClient {
 

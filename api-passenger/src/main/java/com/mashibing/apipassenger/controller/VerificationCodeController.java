@@ -1,18 +1,13 @@
-package com.mashibing.servicepassengeruser.apipassenger.controller;
+package com.mashibing.apipassenger.controller;
 
-import com.mashibing.servicepassengeruser.apipassenger.service.VerificationCodeService;
-import com.mashibing.servicepassengeruser.internalcommon.dto.ResponseResult;
-import com.mashibing.servicepassengeruser.internalcommon.request.VerificationCodeDTO;
+import com.mashibing.apipassenger.service.VerificationCodeService;
+import com.mashibing.internalcommon.dto.ResponseResult;
+import com.mashibing.internalcommon.request.VerificationCodeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
-* @author 马佳健
-* @date 2024/12/16
-* @description
-*/
 @RestController
 public class VerificationCodeController {
 
@@ -27,8 +22,10 @@ public class VerificationCodeController {
      */
     @PostMapping("/verification-code")
     public ResponseResult verificationCode(@RequestBody VerificationCodeDTO verificationCodeDTO){
+
         String passengerPhone = verificationCodeDTO.getPassengerPhone();
         return verificationCodeService.generatorCode(passengerPhone);
+
     }
 
     /**
