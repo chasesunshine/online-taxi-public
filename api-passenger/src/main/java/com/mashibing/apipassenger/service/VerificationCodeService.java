@@ -1,5 +1,6 @@
 package com.mashibing.apipassenger.service;
 
+import com.mashibing.apipassenger.remote.ServicePassengerUserClient;
 import com.mashibing.apipassenger.remote.ServiceVefificationcodeClient;
 import com.mashibing.internalcommon.constant.CommonStatusEnum;
 import com.mashibing.internalcommon.constant.IdentityConstants;
@@ -47,9 +48,13 @@ public class VerificationCodeService {
         stringRedisTemplate.opsForValue().set(key,numberCode+"",2, TimeUnit.MINUTES);
 
         // 通过短信服务商，将对应的验证码发送到手机上。阿里短信服务，腾讯短信通，华信，容联
-        return ResponseResult.success("");
+        return ResponseResult.success(numberCode);
 
     }
+
+
+    @Autowired
+    private ServicePassengerUserClient servicePassengerUserClient;
 
     /**
      * 校验验证码
@@ -84,6 +89,7 @@ public class VerificationCodeService {
         // 判断原来是否有用户，并进行对应的处理
         VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();
         verificationCodeDTO.setPassengerPhone(passengerPhone);
+        servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
         // 颁发令牌，不应该用魔法值，用常量
 

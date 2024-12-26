@@ -22,7 +22,6 @@ public class VerificationCodeController {
      */
     @PostMapping("/verification-code")
     public ResponseResult verificationCode(@RequestBody VerificationCodeDTO verificationCodeDTO){
-
         String passengerPhone = verificationCodeDTO.getPassengerPhone();
         return verificationCodeService.generatorCode(passengerPhone);
 
@@ -42,6 +41,7 @@ public class VerificationCodeController {
 
         System.out.println("手机号"+passengerPhone+",验证码："+verificationCode);
 
+        // 校验验证码
         return verificationCodeService.checkCode(passengerPhone,verificationCode);
     }
 
