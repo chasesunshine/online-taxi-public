@@ -4,10 +4,12 @@ import com.mashibing.apipassenger.remote.ServicePassengerUserClient;
 import com.mashibing.apipassenger.remote.ServiceVefificationcodeClient;
 import com.mashibing.internalcommon.constant.CommonStatusEnum;
 import com.mashibing.internalcommon.constant.IdentityConstants;
+import com.mashibing.internalcommon.constant.TokenConstants;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.request.VerificationCodeDTO;
 import com.mashibing.internalcommon.responese.NumberCodeResponse;
 import com.mashibing.internalcommon.responese.TokenResponse;
+import com.mashibing.internalcommon.util.JwtUtils;
 import com.mashibing.internalcommon.util.RedisPrefixUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,10 +94,11 @@ public class VerificationCodeService {
         servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
         // 颁发令牌，不应该用魔法值，用常量
+        String token = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
 
         // 响应
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setAccessToken("token");
+        tokenResponse.setAccessToken(token);
         return ResponseResult.success(tokenResponse);
     }
 
