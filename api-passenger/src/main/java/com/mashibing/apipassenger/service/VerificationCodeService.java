@@ -65,7 +65,7 @@ public class VerificationCodeService {
      *      1. 根据手机号，去redis读取验证码
      *      2. 如果存在，校验验证码
      *      3. 如果原来没有用户，插入，如果原来有用户，查询 （调用 用户服务）
-     *      4. 颁发 token、同时也要生成 refreshToken，将其存入redis中（都要设置过期时间）
+     *      4. 颁发 token、同时也要生成 refreshToken，将其存入redis中（都要设置过期时间） - 双token
      *      5. 登录成功，返回令牌
      *
      * @param passengerPhone 手机号
@@ -94,15 +94,20 @@ public class VerificationCodeService {
         servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
         // 颁发令牌，不应该用魔法值，用常量
-        String token = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
+        String accessToken = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
+        String refreshToken = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY ,TokenConstants.REFRESH_TOKEN_TYPE);
 
         // 将token存到redis当中
         String accessTokenKey = RedisPrefixUtils.generatorTokenKey(passengerPhone , IdentityConstants.PASSENGER_IDENTITY , TokenConstants.ACCESS_TOKEN_TYPE);
-        stringRedisTemplate.opsForValue().set(accessTokenKey , token , 30, TimeUnit.DAYS);
+        stringRedisTemplate.opsForValue().set(accessTokenKey , accessToken , 30, TimeUnit.DAYS);
+
+        String refreshTokenKey = RedisPrefixUtils.generatorTokenKey(passengerPhone , IdentityConstants.PASSENGER_IDENTITY , TokenConstants.REFRESH_TOKEN_TYPE);
+        stringRedisTemplate.opsForValue().set(refreshTokenKey , refreshToken , 31, TimeUnit.DAYS);
 
         // 响应
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setAccessToken(token);
+        tokenResponse.setAccessToken(accessToken);
+        tokenResponse.setRefreshToken(refreshToken);
         return ResponseResult.success(tokenResponse);
     }
 
