@@ -96,6 +96,10 @@ public class VerificationCodeService {
         // 颁发令牌，不应该用魔法值，用常量
         String token = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
 
+        // 将token存到redis当中
+        String accessTokenKey = RedisPrefixUtils.generatorTokenKey(passengerPhone , IdentityConstants.PASSENGER_IDENTITY , TokenConstants.ACCESS_TOKEN_TYPE);
+        stringRedisTemplate.opsForValue().set(accessTokenKey , token , 30, TimeUnit.DAYS);
+
         // 响应
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setAccessToken(token);

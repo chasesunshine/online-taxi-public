@@ -27,6 +27,19 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 1. 请求头中获取 Authorization
+     * 2. 解析token，校验token
+     * 3. 按照规则，生成tokenKey
+     * 4. 从redis中取出token，校验token
+     * 5. 返回拦截器校验token结果
+     *
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws Exception
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
