@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 
 /**
  * 拦截器代码编写
+ *
 * @author 马佳健
 * @date 2025/1/2
 * @description
@@ -68,8 +69,14 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         if (!result){
-            PrintWriter out = response.getWriter();
-            out.print(JSONObject.fromObject(ResponseResult.fail(resutltString)).toString());
+            try(PrintWriter out = response.getWriter()){
+                out.print(JSONObject.fromObject(ResponseResult.fail(resutltString)).toString());
+            }catch (Exception e){
+                // 记录异常信息或采取其他错误处理措施
+                e.printStackTrace();
+                // 可能需要设置适当的HTTP状态码来表示错误
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
         }
 
         return result;

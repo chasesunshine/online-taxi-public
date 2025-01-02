@@ -20,11 +20,11 @@ public class TokenService {
     private StringRedisTemplate stringRedisTemplate;
 
     /**
-     * 1. 解析 refreshToken
-     * 2. 去读取redis中 的refreshToken
+     * 1. 解析客户端传过来的refreshToken
+     * 2. 去读取redis中的refreshToken
      * 3. 校验refreshToken
-     * 4. 生成双token
-     * 5. 返回双token
+     * 4. 生成双token，accessToken和refreshToken
+     * 5. 返回双token到客户端
      *
      * @param refreshTokenSrc
      * @return
@@ -38,7 +38,7 @@ public class TokenService {
         String phone = tokenResult.getPhone();
         String identity = tokenResult.getIdentity();
 
-        // 去读取redis中 的refreshToken
+        // 去读取redis中的refreshToken
         String refreshTokenKey = RedisPrefixUtils.generatorTokenKey(phone,identity, TokenConstants.REFRESH_TOKEN_TYPE);
         String refreshTokenRedis = stringRedisTemplate.opsForValue().get(refreshTokenKey);
 
@@ -51,11 +51,14 @@ public class TokenService {
         String refreshToken = JwtUtils.generatorToken(phone,identity,TokenConstants.REFRESH_TOKEN_TYPE);
         String accessToken = JwtUtils.generatorToken(phone,identity,TokenConstants.ACCESS_TOKEN_TYPE);
 
+        // 生成accessTokenKey
         String accessTokenKey = RedisPrefixUtils.generatorTokenKey(phone,identity,TokenConstants.ACCESS_TOKEN_TYPE);
 
+        // redis存储双token，设置不同的过期时间
         stringRedisTemplate.opsForValue().set(accessTokenKey , accessToken , 30, TimeUnit.DAYS);
         stringRedisTemplate.opsForValue().set(refreshTokenKey , refreshToken , 31, TimeUnit.DAYS);
 
+        // 将生成的双token返回给客户端，客户端将refreshToken进行本地存储，请求调用的时候使用accessToken
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setRefreshToken(refreshToken);
         tokenResponse.setAccessToken(accessToken);

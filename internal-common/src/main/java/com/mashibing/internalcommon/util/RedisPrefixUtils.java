@@ -1,5 +1,11 @@
 package com.mashibing.internalcommon.util;
 
+/**
+ * redis key 工具类
+* @author 马佳健
+* @date 2025/1/2
+* @description
+*/
 public class RedisPrefixUtils {
 
     // 乘客验证码的前缀
