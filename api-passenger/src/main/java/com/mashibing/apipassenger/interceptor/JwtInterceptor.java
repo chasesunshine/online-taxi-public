@@ -16,6 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 
+/**
+ * 拦截器代码编写
+* @author 马佳健
+* @date 2025/1/2
+* @description
+*/
 public class JwtInterceptor implements HandlerInterceptor {
 
     @Autowired
