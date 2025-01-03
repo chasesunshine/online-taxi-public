@@ -1,6 +1,7 @@
 package com.mashibing.servicemap.service;
 
 import com.mashibing.internalcommon.dto.ResponseResult;
+import com.mashibing.internalcommon.responese.DirectionResponse;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,9 @@ public class DirectionService {
         // 调用第三方地图接口
 //        DirectionResponse direction = mapDirectionClient.direction(depLongitude, depLatitude, destLongitude, destLatitude);
 
-        return ResponseResult.success(null);
+        DirectionResponse direction = new DirectionResponse();
+        direction.setDistance(123);
+        direction.setDuration(2);
+        return ResponseResult.success(direction);
     }
 }
