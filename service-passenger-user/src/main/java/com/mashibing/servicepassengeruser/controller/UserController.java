@@ -26,4 +26,16 @@ public class UserController {
         return userService.loginOrRegister(passengerPhone);
     }
 
+    /**
+     * 根据手机号获取用户信息
+     *
+     * @param passengerPhone
+     * @return
+     */
+    @GetMapping("/user/{phone}")
+    public ResponseResult getUser(@PathVariable("phone") String passengerPhone){
+        System.out.println("service-passenger-user: phone:"+passengerPhone);
+        return userService.getUserByPhone(passengerPhone);
+    }
+
 }

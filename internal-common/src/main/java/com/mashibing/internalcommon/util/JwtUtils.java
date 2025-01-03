@@ -6,13 +6,14 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.mashibing.internalcommon.dto.TokenResult;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class JwtUtils {
-
     // 盐
     private static final String SIGN = "CPFmsb!@#$$";
 
@@ -75,7 +76,7 @@ public class JwtUtils {
         try {
             tokenResult = JwtUtils.parseToken(token);
         }catch (Exception e){
-
+            log.info("token解析异常");
         }
         return tokenResult;
     }
