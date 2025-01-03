@@ -6,12 +6,12 @@ import lombok.Data;
 public class DirectionResponse {
 
     /**
-     * 距离
+     * 行驶距离 - 单位：米
      */
     private Integer distance;
 
     /**
-     * 时长
+     * 预计行驶时间 - 单位：秒
      */
     private Integer duration;
 }
